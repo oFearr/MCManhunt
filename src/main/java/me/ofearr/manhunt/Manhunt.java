@@ -113,8 +113,10 @@ public final class Manhunt extends JavaPlugin {
 
 
                         }
+
+                        p.sendMessage(TranslateColour("&8[&b&lManhut&8] >> &aThe game has been started by " + sender.getName() + "!"));
                     }
-                    player.sendMessage(TranslateColour("&8[&b&lManhut&8] >> &aThe game has been started by " + sender.getName() + "!"));
+
                     activeGrace = true;
                     activeListeners = true;
 
@@ -199,6 +201,24 @@ public final class Manhunt extends JavaPlugin {
                         }
                     }.runTaskTimer(plugin, 0, 20L);
 
+                }
+            }
+        }
+
+        if (command.getName().toLowerCase().equals("endgame")) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                if (!(player.hasPermission("manhunt.end"))) {
+                    player.sendMessage(ChatColor.RED + "Insufficient permissions!");
+                } else {
+                    for(Player p : Bukkit.getOnlinePlayers()){
+                        p.sendMessage(TranslateColour("&8[&b&lManhut&8] >> &aThe game has been ended by " + sender.getName() + "!"));
+                        playerRoles.clear();
+                        runners.clear();
+                        playerPortalStatus.clear();
+                        deadHunters.clear();
+                        activeGrace = false;
+                    }
                 }
             }
         }

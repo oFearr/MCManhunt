@@ -9,3 +9,6 @@ commands:
   startgame:
     description: Start a game of manhunt.
     aliases: [startmanhunt, manhuntstart]
+  endgame:
+    description: End a game of manhunt.
+    aliases: [endmanhunt, manhuntend]
