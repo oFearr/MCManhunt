@@ -37,11 +37,17 @@ public final class Manhunt extends JavaPlugin {
         activeGrace = false;
         activeListeners = false;
         loadConfig();
+
+        Bukkit.getPluginManager().registerEvents(new EventHandlers(), this);
+        Bukkit.getPluginManager().registerEvents(new CompassHandler(), this);
     }
 
     @Override
     public void onDisable() {
         playerRoles.clear();
+        runners.clear();
+        playerPortalStatus.clear();
+        deadHunters.clear();
     }
 
     public void loadConfig(){
