@@ -1,0 +1,4 @@
+name: Manhunt
+version: ${project.version}
+main: me.ofearr.manhunt.Manhunt
+api-version: 1.16

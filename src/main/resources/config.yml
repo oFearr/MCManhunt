@@ -1,0 +1,16 @@
+#Dev oFearr, Please don't claim this to be your own plugin.
+
+Settings:
+  #In seconds
+  grace-period: 1200
+  spawn-location: 0,0,0
+  allow-team-pvp: false
+  team-pvp-deny-message: "&8[&cTEAM&8] >> &bYou cannot PVP players within your team!"
+  runner-death-message: "&8[&aRUNNER DEATH&8] >> &c<player> has died and become a &f&lGhost&c!"
+  hunter-death-message: "&8[&cHUNTER DEATH&8] >> &c<player> has died and will now respawn!"
+  #In seconds
+  hunter-respawn-cooldown: 5
+  #In seconds
+  player-tracker-cooldown: 5
+  over-world-name: "WORLD"
+  nether-world-name: "WORLD_NETHER"
