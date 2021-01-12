@@ -62,16 +62,17 @@ public final class Manhunt extends JavaPlugin {
                 if (!(player.hasPermission("manhunt.assign"))) {
                     player.sendMessage(ChatColor.RED + "Insufficient permissions!");
                 } else {
-                    if(args == null){
-                        player.sendMessage("&cYou must provide a player name to set as a runner!");
-                    }
-                    else if(Bukkit.getOnlinePlayers().contains(args[0])){
-                        Player target = Bukkit.getPlayer(args[0]);
-                        playerRoles.put(target.getUniqueId(), "RUNNER");
-                        runners.add(target.getUniqueId());
-                        player.sendMessage("&aSuccessfully set " + target.getName() + " as a runner!");
-                    } else {
-                        player.sendMessage("&cThat player is not online!");
+                    if(args.length == 0){
+                        player.sendMessage(TranslateColour("&cYou must provide a player name to set as a runner!"));
+                    } else{
+                        if(!(Bukkit.getServer().getPlayer(args[0]) == null) && args[0] != null){
+                            Player target = Bukkit.getPlayer(args[0]);
+                            playerRoles.put(target.getUniqueId(), "RUNNER");
+                            runners.add(target.getUniqueId());
+                            player.sendMessage(TranslateColour("&aSuccessfully set " + target.getName() + " as a runner!"));
+                        } else if(Bukkit.getServer().getPlayer(args[0])  == null) {
+                            player.sendMessage(TranslateColour("&cThat player is not online!"));
+                        }
                     }
                 }
             }
@@ -103,7 +104,7 @@ public final class Manhunt extends JavaPlugin {
                             lore.add(" ");
                             lore.add(TranslateColour("&6Item Ability: Path Finder &c&lRIGHT CLICK"));
                             lore.add(TranslateColour("&7Points your compass to the"));
-                            lore.add(TranslateColour("&7closest player/portal entry"));
+                            lore.add(TranslateColour("&7closest runner/portal entry."));
                             lore.add("");
                             lore.add(TranslateColour("&8Cooldown: " + getConfig().getInt("Settings.player-tracker-cooldown") + "s"));
 
@@ -194,6 +195,7 @@ public final class Manhunt extends JavaPlugin {
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Ended!"), TranslateColour("&aThe grace period has ended!"));
                                     p.sendMessage(TranslateColour("&8[&b&lManhut&8] >> &aThe grace period has ended! Be careful!"));
+                                    this.cancel();
                                 }
                                 activeGrace = false;
                             }

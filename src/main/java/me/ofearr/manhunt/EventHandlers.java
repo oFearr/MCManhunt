@@ -56,13 +56,13 @@ public class EventHandlers implements Listener {
     @EventHandler
     public void EventPortalTravel(PlayerPortalEvent e){
         if(plugin.activeListeners == false) return;
-        Location entryPortal = e.getFrom();
+        Location entryPortal = e.getPlayer().getLocation();
         Player player = e.getPlayer();
 
         if(entryPortal.getWorld().getName().equalsIgnoreCase(plugin.getConfig().getString("Settings.over-world-name"))){
-            Manhunt.playerPortalStatus.put(player.getUniqueId(), entryPortal);
+            plugin.playerPortalStatus.put(player.getUniqueId(), entryPortal);
         } else if(entryPortal.getWorld().getName().equalsIgnoreCase(plugin.getConfig().getString("Settings.nether-world-name"))){
-            Manhunt.playerPortalStatus.remove(player.getUniqueId());
+            plugin.playerPortalStatus.remove(player.getUniqueId());
         }
     }
 
@@ -72,7 +72,9 @@ public class EventHandlers implements Listener {
         if(plugin.activeListeners == false) return;
         Player player = e.getEntity();
         if(plugin.playerRoles.get(player.getUniqueId()) == "RUNNER"){
-            e.setDeathMessage(TranslateColour(plugin.getConfig().getString("Settings.runner-death-message")).replace("<player>", player.getName()));
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.sendMessage(TranslateColour(plugin.getConfig().getString("Settings.runner-death-message")).replace("<player>", player.getName()));
+            }
             player.getInventory().clear();
             e.setCancelled(true);
             player.setGameMode(GameMode.SPECTATOR);
@@ -80,6 +82,7 @@ public class EventHandlers implements Listener {
             if(!(plugin.playerRoles.containsValue("RUNNER"))){
                 for(Player p : Bukkit.getOnlinePlayers()){
                     p.sendTitle(TranslateColour("&c&lGame Over!"), TranslateColour("&aThere are no runners left!"));
+                    p.sendMessage(TranslateColour("&8[&b&lManhut&8] >> &aThe game has ended since all the runners died!"));
                     plugin.playerRoles.clear();
                     plugin.runners.clear();
                     plugin.playerPortalStatus.clear();
@@ -89,7 +92,9 @@ public class EventHandlers implements Listener {
             }
         }
         else if(plugin.playerRoles.get(player.getUniqueId()) == "HUNTER"){
-            e.setDeathMessage(TranslateColour(plugin.getConfig().getString("Settings.hunter-death-message")).replace("<player>", player.getName()));
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.sendMessage(TranslateColour(plugin.getConfig().getString("Settings.hunter-death-message")).replace("<player>", player.getName()));
+            }
             player.getInventory().clear();
             e.setCancelled(true);
             player.setGameMode(GameMode.SPECTATOR);
@@ -102,11 +107,12 @@ public class EventHandlers implements Listener {
                 @Override
                 public void run(){
 
-                    if (respawnTimer <= 0) {
-                        player.sendTitle(TranslateColour("&c&lRespawning!"), null);
+                    if (respawnTimer == 0) {
                         this.cancel();
 
-                        String spawnCoords = plugin.getConfig().getString("spawn-location");
+                        player.sendTitle(TranslateColour("&c&lRespawning!"), null);
+
+                        String spawnCoords = plugin.getConfig().getString("Settings.spawn-location");
                         ArrayList<String> splitCoords = new ArrayList<>(Arrays.asList(spawnCoords.split(", ")));
 
                         double X = Double.valueOf(splitCoords.get(0));
@@ -129,7 +135,7 @@ public class EventHandlers implements Listener {
                         lore.add(" ");
                         lore.add(TranslateColour("&6Item Ability: Path Finder &c&lRIGHT CLICK"));
                         lore.add(TranslateColour("&7Points your compass to the"));
-                        lore.add(TranslateColour("&7closest player/portal entry"));
+                        lore.add(TranslateColour("&7closest runner/portal entry."));
                         lore.add("");
                         lore.add(TranslateColour("&8Cooldown: " + plugin.getConfig().getInt("Settings.player-tracker-cooldown") + "s"));
 

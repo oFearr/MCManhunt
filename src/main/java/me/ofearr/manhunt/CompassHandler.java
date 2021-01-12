@@ -25,7 +25,7 @@ public class CompassHandler implements Listener {
 
     private static Manhunt plugin = Manhunt.plugin;
     private int cooldownTime = plugin.getConfig().getInt("Settings.player-tracker-cooldown");
-    HashMap<UUID,Long> cooldown = new HashMap<>();
+    HashMap<UUID, Long> cooldown = new HashMap<>();
 
     @EventHandler
     public void EventCompassUse(PlayerInteractEvent e){
@@ -35,19 +35,29 @@ public class CompassHandler implements Listener {
 
             ItemStack heldItem = e.getPlayer().getInventory().getItemInMainHand();
 
-            if(heldItem == null) return;
-            if(!(heldItem.hasItemMeta())) return;
-            if(!(heldItem.getItemMeta().hasLore())) return;
+            if(heldItem == null){
+                return;
+            }
+            if(!(heldItem.hasItemMeta())){
+                return;
+            }
+            if(!(heldItem.getItemMeta().hasLore())){
+                return;
+            }
 
-            if(heldItem.getItemMeta().getDisplayName().equalsIgnoreCase("&c&lTracking Compass")){
+            if(heldItem.getItemMeta().getDisplayName().equalsIgnoreCase(TranslateColour("&c&lTracking Compass"))){
+
                 if(cooldown.containsKey(player.getUniqueId())){
-                    Long timeLeft = ((cooldown.get(player.getUniqueId()) / 100) + cooldownTime) - (System.currentTimeMillis() / 1000);
-                    if(timeLeft > 0){
-                        player.sendMessage(TranslateColour("&cThis item is currently on cooldown for " + timeLeft + "s!"));
+                    if(cooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
+                        long timeRemaining = (cooldown.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;
+                        player.sendMessage(TranslateColour("&cThis item is currently on cooldown for " +  timeRemaining + "s!"));
+                        return;
                     }
-                } else {
-                    cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+
                 }
+
+                cooldown.put(player.getUniqueId(), System.currentTimeMillis() + (cooldownTime * 1000));
+
 
                 ArrayList<Location> playerLocations = new ArrayList<>();
 
@@ -56,12 +66,14 @@ public class CompassHandler implements Listener {
                     if(target.getWorld().getName().equalsIgnoreCase(plugin.getConfig().getString("Settings.over-world-name"))){
                         Location loc = target.getLocation();
                         playerLocations.add(loc);
-                    } else if(target.getWorld().getName().equalsIgnoreCase(plugin.getConfig().getString("Settings.over-nether-world-name"))){
-                        Location loc = plugin.playerPortalStatus.get(target);
+                    } else if(target.getWorld().getName().equalsIgnoreCase(plugin.getConfig().getString("Settings.nether-world-name"))){
+                        Location loc = plugin.playerPortalStatus.get(target.getUniqueId());
                         playerLocations.add(loc);
+
                     }
 
                 }
+
 
                 Location closestLoc = player.getLocation();
                 Double currentLocationDistance = 99999.0;
@@ -76,6 +88,8 @@ public class CompassHandler implements Listener {
                     }
 
                 }
+
+                if(closestLoc == null) player.sendMessage("null");
 
                 player.setCompassTarget(closestLoc);
 
