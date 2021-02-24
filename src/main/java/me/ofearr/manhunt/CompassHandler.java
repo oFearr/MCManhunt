@@ -48,16 +48,13 @@ public class CompassHandler implements Listener {
             if(heldItem.getItemMeta().getDisplayName().equalsIgnoreCase(TranslateColour("&c&lTracking Compass"))){
 
                 if(cooldown.containsKey(player.getUniqueId())){
-                    if(cooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
-                        long timeRemaining = (cooldown.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;
-                        player.sendMessage(TranslateColour("&cThis item is currently on cooldown for " +  timeRemaining + "s!"));
-                        return;
+                    Long timeLeft = ((cooldown.get(player.getUniqueId()) / 100) + cooldownTime) - (System.currentTimeMillis() / 1000);
+                    if(timeLeft > 0){
+                        player.sendMessage(TranslateColour("&cThis item is currently on cooldown for " + timeLeft + "s!"));
                     }
-
+                } else {
+                    cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                 }
-
-                cooldown.put(player.getUniqueId(), System.currentTimeMillis() + (cooldownTime * 1000));
-
 
                 ArrayList<Location> playerLocations = new ArrayList<>();
 

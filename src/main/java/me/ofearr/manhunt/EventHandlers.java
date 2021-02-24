@@ -75,7 +75,6 @@ public class EventHandlers implements Listener {
             for(Player p : Bukkit.getOnlinePlayers()){
                 p.sendMessage(TranslateColour(plugin.getConfig().getString("Settings.runner-death-message")).replace("<player>", player.getName()));
             }
-            player.getInventory().clear();
             e.setCancelled(true);
             player.setGameMode(GameMode.SPECTATOR);
             plugin.playerRoles.remove(player.getUniqueId());
