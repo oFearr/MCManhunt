@@ -72,6 +72,7 @@ public class EventHandlers implements Listener {
     }
 
     //New death handling system, likely much cleaner than before
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EventPlayerDeath(PlayerDeathEvent e){
         if(!plugin.activeListeners) return;
@@ -169,6 +170,7 @@ public class EventHandlers implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EventDragonKilled(EntityDeathEvent e){
         if(!plugin.activeListeners) return;

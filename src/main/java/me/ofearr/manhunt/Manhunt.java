@@ -51,6 +51,7 @@ public final class Manhunt extends JavaPlugin {
         saveDefaultConfig();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().toLowerCase().equals("setrunner")) {
@@ -112,7 +113,7 @@ public final class Manhunt extends JavaPlugin {
 
                         }
 
-                        p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe game has been started by " + sender.getName() + "!"));
+                        p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe game has been started by " + sender.getName() + "!"));
                     }
 
                     activeGrace = true;
@@ -128,70 +129,70 @@ public final class Manhunt extends JavaPlugin {
                             if(graceTimer == 600){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 10 minutes!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 10 minutes!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 10 minutes!"));
                                 }
                             }
 
                             if(graceTimer == 300){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 5 minutes!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 5 minutes!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 5 minutes!"));
                                 }
                             }
 
                             if(graceTimer == 60){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 1 minute!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 1 minute!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 1 minute!"));
                                 }
                             }
 
                             if(graceTimer == 10){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 10 seconds!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 10 seconds!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 10 seconds!"));
                                 }
                             }
 
                             if(graceTimer == 5){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 5 seconds!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 5 seconds!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 5 seconds!"));
                                 }
                             }
 
                             if(graceTimer == 4){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 4 seconds!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 4 seconds!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 4 seconds!"));
                                 }
                             }
 
                             if(graceTimer == 3){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 3 seconds!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 3 seconds!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 3 seconds!"));
                                 }
                             }
 
                             if(graceTimer == 2){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 2 seconds!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 2 seconds!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 2 seconds!"));
                                 }
                             }
 
                             if(graceTimer == 1){
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Period!"), TranslateColour("&aThe grace period will end in 1 second!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period will end in 1 second!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period will end in 1 second!"));
                                 }
                             }
 
                             if (graceTimer <= 0) {
                                 for(Player p : Bukkit.getOnlinePlayers()){
                                     p.sendTitle(TranslateColour("&6&lGrace Ended!"), TranslateColour("&aThe grace period has ended!"));
-                                    p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe grace period has ended! Be careful!"));
+                                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe grace period has ended! Be careful!"));
                                     this.cancel();
                                 }
                                 activeGrace = false;
@@ -211,7 +212,7 @@ public final class Manhunt extends JavaPlugin {
                     player.sendMessage(ChatColor.RED + "Insufficient permissions!");
                 } else {
                     for(Player p : Bukkit.getOnlinePlayers()){
-                        p.sendMessage(TranslateColour("&8[&b&lManhunt&8] >> &aThe game has been ended by " + sender.getName() + "!"));
+                        p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe game has been ended by " + sender.getName() + "!"));
                         playerRoles.clear();
                         runners.clear();
                         playerPortalStatus.clear();
