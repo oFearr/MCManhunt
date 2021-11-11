@@ -36,11 +36,11 @@ public class EventHandlers implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EventPVP(EntityDamageByEntityEvent e){
-        if(plugin.activeListeners == false) return;
+        if(!plugin.activeListeners) return;
         if(!(e.getDamager() instanceof Player)) return;
         if(!(e.getEntity() instanceof Player)) return;
         Player damager = (Player) e.getDamager();
-        if(plugin.activeGrace == true){
+        if(plugin.activeGrace){
             e.setCancelled(true);
             damager.sendMessage((TranslateColour("&8[&b&lManhut&8] >> &You cannot attack other players while the grace period is active!")));
             return;
@@ -60,7 +60,7 @@ public class EventHandlers implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EventPortalTravel(PlayerPortalEvent e){
-        if(plugin.activeListeners == false) return;
+        if(!plugin.activeListeners) return;
         Location entryPortal = e.getPlayer().getLocation();
         Player player = e.getPlayer();
 
@@ -74,7 +74,7 @@ public class EventHandlers implements Listener {
     //New death handling system, likely much cleaner than before
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EventPlayerDeath(PlayerDeathEvent e){
-        if(plugin.activeListeners == false) return;
+        if(!plugin.activeListeners) return;
         Player player = e.getEntity();
         if(plugin.playerRoles.get(player.getUniqueId()) == "RUNNER"){
             for(Player p : Bukkit.getOnlinePlayers()){
@@ -161,7 +161,7 @@ public class EventHandlers implements Listener {
     //Prevents movement of dead hunters to prevent cheating
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EventGhostHunterMove(PlayerMoveEvent e){
-        if(plugin.activeListeners == false) return;
+        if(!plugin.activeListeners) return;
         Player player = e.getPlayer();
 
         if(plugin.deadHunters.contains(player.getUniqueId())){
@@ -171,7 +171,7 @@ public class EventHandlers implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EventDragonKilled(EntityDeathEvent e){
-        if(plugin.activeListeners == false) return;
+        if(!plugin.activeListeners) return;
         Entity entity = e.getEntity();
         if(!(entity.getType() == EntityType.ENDER_DRAGON)) return;
         if(!(e.getEntity().getKiller() instanceof Player)) return;
