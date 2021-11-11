@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -23,11 +24,16 @@ public class CompassHandler implements Listener {
         return translated;
     }
 
-    private static Manhunt plugin = Manhunt.plugin;
-    private int cooldownTime = plugin.getConfig().getInt("Settings.player-tracker-cooldown");
-    HashMap<UUID, Long> cooldown = new HashMap<>();
+    private static Manhunt plugin;
 
-    @EventHandler
+    public CompassHandler(Manhunt manhunt){
+        this.plugin = manhunt;
+    }
+
+    private int cooldownTime = plugin.getConfig().getInt("Settings.player-tracker-cooldown");
+    private HashMap<UUID, Long> cooldownTracker = new HashMap<>();
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void EventCompassUse(PlayerInteractEvent e){
         if(plugin.activeListeners == false) return;
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR){
@@ -47,13 +53,13 @@ public class CompassHandler implements Listener {
 
             if(heldItem.getItemMeta().getDisplayName().equalsIgnoreCase(TranslateColour("&c&lTracking Compass"))){
 
-                if(cooldown.containsKey(player.getUniqueId())){
-                    Long timeLeft = ((cooldown.get(player.getUniqueId()) / 100) + cooldownTime) - (System.currentTimeMillis() / 1000);
+                if(cooldownTracker.containsKey(player.getUniqueId())){
+                    Long timeLeft = ((cooldownTracker.get(player.getUniqueId()) / 100) + cooldownTime) - (System.currentTimeMillis() / 1000);
                     if(timeLeft > 0){
                         player.sendMessage(TranslateColour("&cThis item is currently on cooldown for " + timeLeft + "s!"));
                     }
                 } else {
-                    cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                    cooldownTracker.put(player.getUniqueId(), System.currentTimeMillis());
                 }
 
                 ArrayList<Location> playerLocations = new ArrayList<>();
@@ -86,7 +92,7 @@ public class CompassHandler implements Listener {
 
                 }
 
-                if(closestLoc == null) player.sendMessage("null");
+                if(closestLoc == null) player.sendMessage(TranslateColour("&8[&b&lManhut&8] >> &cFailed to find a player location!"));
 
                 player.setCompassTarget(closestLoc);
 

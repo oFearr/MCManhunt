@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -20,7 +21,11 @@ import java.util.Arrays;
 
 public class EventHandlers implements Listener {
 
-    private static Manhunt plugin = Manhunt.plugin;
+    private static Manhunt plugin;
+
+    public EventHandlers(Manhunt manhunt){
+        this.plugin = manhunt;
+    }
 
     public static String TranslateColour(String text){
 
@@ -29,7 +34,7 @@ public class EventHandlers implements Listener {
         return translated;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void EventPVP(EntityDamageByEntityEvent e){
         if(plugin.activeListeners == false) return;
         if(!(e.getDamager() instanceof Player)) return;
@@ -53,7 +58,7 @@ public class EventHandlers implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void EventPortalTravel(PlayerPortalEvent e){
         if(plugin.activeListeners == false) return;
         Location entryPortal = e.getPlayer().getLocation();
@@ -67,7 +72,7 @@ public class EventHandlers implements Listener {
     }
 
     //New death handling system, likely much cleaner than before
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void EventPlayerDeath(PlayerDeathEvent e){
         if(plugin.activeListeners == false) return;
         Player player = e.getEntity();
@@ -154,7 +159,7 @@ public class EventHandlers implements Listener {
     }
 
     //Prevents movement of dead hunters to prevent cheating
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void EventGhostHunterMove(PlayerMoveEvent e){
         if(plugin.activeListeners == false) return;
         Player player = e.getPlayer();
@@ -164,7 +169,7 @@ public class EventHandlers implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void EventDragonKilled(EntityDeathEvent e){
         if(plugin.activeListeners == false) return;
         Entity entity = e.getEntity();
