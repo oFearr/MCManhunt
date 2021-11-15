@@ -42,7 +42,7 @@ public class EventHandlers implements Listener {
         Player damager = (Player) e.getDamager();
         if(plugin.activeGrace){
             e.setCancelled(true);
-            damager.sendMessage((TranslateColour("&8[&b&lManhut&8] >> &You cannot attack other players while the grace period is active!")));
+            damager.sendMessage((TranslateColour("&8[&b&lManHunt&8] >> &You cannot attack other players while the grace period is active!")));
             return;
         }
         Player attacked = (Player) e.getEntity();
