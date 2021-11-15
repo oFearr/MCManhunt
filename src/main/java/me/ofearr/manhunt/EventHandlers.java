@@ -47,12 +47,12 @@ public class EventHandlers implements Listener {
         }
         Player attacked = (Player) e.getEntity();
 
-        if(Manhunt.playerRoles.get(damager.getUniqueId()) == "HUNTER" && Manhunt.playerRoles.get(attacked.getUniqueId()) == "HUNTER" && plugin.getConfig().getString("Settings.allow-team-pvp") == "false"){
+        if(plugin.playerRoles.get(damager.getUniqueId()) == "HUNTER" && plugin.playerRoles.get(attacked.getUniqueId()) == "HUNTER" && plugin.getConfig().getString("Settings.allow-team-pvp") == "false"){
             damager.sendMessage(TranslateColour(plugin.getConfig().getString("Settings.team-pvp-deny-message")));
             e.setCancelled(true);
         }
 
-        if(Manhunt.playerRoles.get(damager.getUniqueId()) == "RUNNER" && Manhunt.playerRoles.get(attacked.getUniqueId()) == "RUNNER" && plugin.getConfig().getString("Settings.allow-team-pvp") == "false"){
+        if(plugin.playerRoles.get(damager.getUniqueId()) == "RUNNER" && plugin.playerRoles.get(attacked.getUniqueId()) == "RUNNER" && plugin.getConfig().getString("Settings.allow-team-pvp") == "false"){
             damager.sendMessage(TranslateColour(plugin.getConfig().getString("Settings.team-pvp-deny-message")));
             e.setCancelled(true);
         }

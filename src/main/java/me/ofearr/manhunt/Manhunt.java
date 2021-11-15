@@ -21,22 +21,25 @@ public final class Manhunt extends JavaPlugin {
 
         return translated;
     }
-    public static boolean activeGrace;
-    public static boolean activeListeners;
+    public boolean activeGrace;
+    public boolean activeListeners;
 
-    public static HashMap<UUID, String> playerRoles = new HashMap<>();
-    public static ArrayList<UUID> runners = new ArrayList<>();
-    public static HashMap<UUID, Location> playerPortalStatus = new HashMap<>();
-    public static ArrayList<UUID> deadHunters = new ArrayList<>();
+    public HashMap<UUID, String> playerRoles = new HashMap<>();
+    public ArrayList<UUID> runners = new ArrayList<>();
+    public HashMap<UUID, Location> playerPortalStatus = new HashMap<>();
+    public ArrayList<UUID> deadHunters = new ArrayList<>();
+
+    public static Manhunt plugin;
 
     @Override
     public void onEnable() {
+        plugin = this;
         activeGrace = false;
         activeListeners = false;
-        loadConfig();
+        saveDefaultConfig();
 
         Bukkit.getPluginManager().registerEvents(new EventHandlers(this), this);
-        Bukkit.getPluginManager().registerEvents(new CompassHandler(this), this);
+        Bukkit.getPluginManager().registerEvents(new CompassHandler(), this);
     }
 
     @Override
@@ -45,10 +48,6 @@ public final class Manhunt extends JavaPlugin {
         runners.clear();
         playerPortalStatus.clear();
         deadHunters.clear();
-    }
-
-    public void loadConfig(){
-        saveDefaultConfig();
     }
 
     @SuppressWarnings("deprecation")

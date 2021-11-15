@@ -24,11 +24,7 @@ public class CompassHandler implements Listener {
         return translated;
     }
 
-    private static Manhunt plugin;
-
-    public CompassHandler(Manhunt manhunt){
-        this.plugin = manhunt;
-    }
+    private Manhunt plugin = Manhunt.plugin;
 
     private int cooldownTime = plugin.getConfig().getInt("Settings.player-tracker-cooldown");
     private HashMap<UUID, Long> cooldownTracker = new HashMap<>();
