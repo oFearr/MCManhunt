@@ -87,7 +87,7 @@ public class EventHandlers implements Listener {
             if(!(plugin.playerRoles.containsValue("RUNNER"))){
                 for(Player p : Bukkit.getOnlinePlayers()){
                     p.sendTitle(TranslateColour("&c&lGame Over!"), TranslateColour("&aThere are no runners left!"));
-                    p.sendMessage(TranslateColour("&8[&b&lManhut&8] >> &aThe game has ended since all the runners died!"));
+                    p.sendMessage(TranslateColour("&8[&b&lManHunt&8] >> &aThe game has ended since all the runners died!"));
                     plugin.playerRoles.clear();
                     plugin.runners.clear();
                     plugin.playerPortalStatus.clear();
